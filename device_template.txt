@@ -1,0 +1,20 @@
+ios_template
+ip_address = [[10.0.1.1, cisco, cisco123, cisco123], [10.0.1.2, cisco, cisco123, cisco123], 
+[10.0.1.130, cisco, cisco123, cisco123]]
+$$
+router bgp 65001
+neighbor 10.1.$
+neighbor 10.1.103.3 remote-as 65002
+$$
+router bgp $
+neighbor 10.1.(()).(())
+neighbor $ remote-as 65002
+$$
+router ospf (())
+router-id (())
+network 10.0.(()).(()) area (())
+$$
+router ospf $
+router-id $
+network $
+network (()) (())

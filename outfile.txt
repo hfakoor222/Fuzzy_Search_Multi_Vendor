@@ -1,0 +1,99 @@
+Config not found for   ios_template 10.0.1.1
+********************
+router bgp 65001
+neighbor 10.1..*?
+neighbor 10.1.103.3 remote-as 65002
+
+Config not found for   ios_template 10.0.1.1
+********************
+router bgp .*?
+neighbor 10.1.\S+.\S+
+neighbor .*? remote-as 65002
+
+Config not found for   ios_template 10.0.1.1
+********************
+router ospf \S+
+router-id \S+
+network 10.0.\S+.\S+ area \S+
+
+Found match for:  ios_template 10.0.1.1
+********************
+router ospf 1
+router-id 6.6.6.6
+domain-tag 55
+passive-interface Ethernet0/3
+network 10.0.1.0 0.0.0.127 area 1
+network 10.0.1.128 0.0.0.127
+Config not found for   ios_template 10.0.1.2
+********************
+router bgp 65001
+neighbor 10.1..*?
+neighbor 10.1.103.3 remote-as 65002
+
+Config not found for   ios_template 10.0.1.2
+********************
+router bgp .*?
+neighbor 10.1.\S+.\S+
+neighbor .*? remote-as 65002
+
+Found match for:  ios_template 10.0.1.2
+********************
+router ospf 1
+router-id 5.5.5.5
+network 10.0.1.0 0.0.0.127 area 1
+
+Found match for:  ios_template 10.0.1.2
+********************
+router ospf 1
+router-id 5.5.5.5
+network 10.0.1.0 0.0.0.127 area 1
+network 10.0.2.0 0.0.0.127
+Config not found for   ios_template 10.0.1.130
+********************
+router bgp 65001
+neighbor 10.1..*?
+neighbor 10.1.103.3 remote-as 65002
+
+Config not found for   ios_template 10.0.1.130
+********************
+router bgp .*?
+neighbor 10.1.\S+.\S+
+neighbor .*? remote-as 65002
+
+Config not found for   ios_template 10.0.1.130
+********************
+router ospf \S+
+router-id \S+
+network 10.0.\S+.\S+ area \S+
+
+Found match for:  ios_template 10.0.1.130
+********************
+router ospf 1
+router-id 9.9.9.9
+passive-interface Ethernet0/2
+network 10.0.1.128 0.0.0.127 area 1
+network 10.0.3.0 0.0.0.127
+Config not found for   ios_template 10.0.3.4
+********************
+router bgp 65001
+neighbor 10.1..*?
+neighbor 10.1.103.3 remote-as 65002
+
+Config not found for   ios_template 10.0.3.4
+********************
+router bgp .*?
+neighbor 10.1.\S+.\S+
+neighbor .*? remote-as 65002
+
+Found match for:  ios_template 10.0.3.4
+********************
+router ospf 1
+router-id 11.11.11.11
+network 10.0.2.0 0.0.0.127 area 1
+
+Found match for:  ios_template 10.0.3.4
+********************
+router ospf 1
+router-id 11.11.11.11
+network 10.0.2.0 0.0.0.127 area 1
+network 10.0.3.0 0.0.0.127
