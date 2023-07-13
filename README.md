@@ -5,3 +5,4 @@ characters no spaces. This gives the user absolute control in template definitio
 
 
 refer to "config_documentation.txt"   for instructions
+and the template+config.py file
