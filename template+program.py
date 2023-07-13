@@ -59,10 +59,6 @@ for i in dev_list:
                 var = i.split(",")
                 ip_address, username, password, secret = str(var[0]).strip(),\
                     str(var[1]).strip(), str(var[2]).strip(), str(var[3]).strip()
-                # print(ip_address)
-                # print(username)
-                # print(password)
-                # print(secret)
 
                 dev_type= 'cisco_ios'
                 print("*" * 8)
@@ -95,20 +91,6 @@ for i in dev_list:
 
     #connection_handler( vendor_address_list, "autodetect")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #address_list = re.search(".*", address_list.string, re.DOTALL )
 
 
 
