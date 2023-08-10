@@ -1,19 +1,5 @@
 
 
-with open('dwn.txt') as f:
-    for i in range(6):
-        next(f)
-    for line in f:
-        process(line)
-
-or
-
-with open('input.txt', 'r') as txt_in:
-    all_contents = txt_in.read()
-first_half = all_contents[:pos]
-second_half = all_contents[pos:]
-
-
 #######################################################################################################
 Welcome to configuration template parser program. This program parses multivendor devices.
 Currently ASA, Cisco IOS, IOS-XE,  and Juniper router devices are supported.

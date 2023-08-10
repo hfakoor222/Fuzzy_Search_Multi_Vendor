@@ -1,3 +1,5 @@
+##   this is example of the output log
+
 Config not found for   ios_template 10.0.1.1
 ********************
 router bgp 65001
