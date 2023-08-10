@@ -4,11 +4,12 @@ import netmiko
 from netmiko.ssh_autodetect import SSHDetect
 from netmiko.ssh_dispatcher import ConnectHandler
 import time
+from netmiko.ssh_autodetect import SSHDetect
 
 
-junos_command = "show configuration"
-ios_command = "show running-config"
-asa_command = "show running-config"
+# junos_command = "show configuration"
+# ios_command = "show running-config"
+# asa_command = "show running-config"
 
 outfile = open("outfile.txt", "a+")
 
@@ -16,21 +17,53 @@ with open("device_template.txt", "r") as dev_template:
     dev_template = dev_template.read()
 
 dev_list = dev_template.split("$$$")
-dev_list = dev_template.split("$$$")
-global configuration_blocks
+print(dev_list)
+def connection_handler(address_list = [], configuration_block=[], dev_type="autodetect"):
+    print(time.time())
+    for i in address_list:
+        var = i.split(",")
+        ip_address, username, password, secret = str(var[0]).strip(), \
+            str(var[1]).strip(), str(var[2]).strip(), str(var[3]).strip()
+        connection = ConnectHandler(host=str(ip_address), username=username, password=password,
+                                                                   secret=secret, device_type=dev_type)
+        connection.enable()
+        time.sleep(1)
+
+        print("*" * 8)
+        result = connection.send_command("show run")
+        result = result.replace("\n ", "\n")
+        #print(repr(result))
+        for i in configuration_block:
+            i = i.rstrip("\n")
+            print(repr(i))
+            print(ip_address)
+            res = re.search(i, result, re.DOTALL)
+            if res: print("found match")
+            #if res: print(res.group() + "\n")
+            if res:
+                outfile.write("Found match for:  " + template + " " + ip_address + "\n" + "*" * 20 + "\n")
+                outfile.write(res.group() + "\n")
+            if not res:
+                outfile.write("Config not found for   " + template + " " + ip_address + "\n" + "*" * 20 + "\n")
+                outfile.write(i + "\n")
+    print(time.time())
+
 for i in dev_list:
 
     configuration_blocks = i.split("$$")
     # we get our configuration text to perform fuzzy searches later
     configuration_blocks = configuration_blocks[1:]
+
+
     #we remove the ip addres list header
     #configuration_blocks.strip()
     # we delete the last item in list if empty, incase user leaves blank lines
     configuration_blocks = [sub.replace("\n", "",1) for sub in configuration_blocks]
     #replacing first occurence of \n in the split
-    configuration_blocks = [sub.replace("$", ".*?").replace("(())", r"\S+" ) for sub in configuration_blocks]
+    configuration_blocks = [sub.replace("+", "(.*)?").replace("(())", r"\S+" ).replace("#", ".*") for sub in configuration_blocks]
     #this is where we pass in fuzzy search characters for regex parsing
-    # notice we made this a non-greedy quantifier with  .*?  so the user can input  $ in the file as a substitute for an any text line
+    # notice we made this a non-greedy quantifier with  .*?  : $ escape character is equal to 1 or 0 lines of any text
+    #whereas the + escape character is equal to 1 or many lines of text
     template = re.search("\w+_template$", i, re.MULTILINE)
     # we use this for device type/template later: multiline option used for surety in case someone mistypes
     template = template.group()
@@ -46,54 +79,20 @@ for i in dev_list:
     updated_address=  updated_address.split("],")
     updated_address = [sub.replace("[[","").replace("]", "").replace("[", "") for sub in updated_address]
     #we now have a formatted list
-    if template == "ios_template":  ios_address_list, ios_template = updated_address, template
-    if template == "junos_template": junos_address_list, junos_template = updated_address, template
-    if template == "asa_template": asa_address_list, asa_template,  = updated_address, template
+    if template == "ios_template":
+        ios_address_list, ios_template, ios_config  = updated_address, template, configuration_blocks
+        connection_handler(ios_address_list, ios_config, "cisco_ios")
+    else:
+        pass
+    # if template == "junos_template": junos_address_list, junos_template, junos_config = updated_address, template, configuration_blocks
+    if template == "asa_template":
+        asa_address_list, asa_template, asa_config = updated_address, template, configuration_blocks
+        connection_handler(asa_address_list, asa_config, "cisco_asa")
+    else:
+        pass
+outfile.close()
 
-    #we now have all the variables we need to do fuzzy searching against devices, they are split into lists and easy to use
-
-    # I will define a function below and use it many times, good for threading
-    def connection_handler( address_list,  dev_type = "autodetect"):
-            print(configuration_blocks)
-            for i in address_list:
-                var = i.split(",")
-                ip_address, username, password, secret = str(var[0]).strip(),\
-                    str(var[1]).strip(), str(var[2]).strip(), str(var[3]).strip()
-                # print(ip_address)
-                # print(username)
-                # print(password)
-                # print(secret)
-
-                dev_type= 'cisco_ios'
-                print("*" * 8)
-                # print( configuration_blocks)
-
-                connection = ConnectHandler(host=str(ip_address), username=username, password=password,
-                                                              secret=secret, device_type=dev_type)
-
-                connection.enable()
-                result = connection.send_command("show run")
-                result = result.replace("\n ", "\n")
-                #print(result)
-                for i in configuration_blocks:
-                    res = re.search(i, result,re.DOTALL)
-                    if res: print("found match")
-                    if res: print(res.group() + "\n")
-                    if res:
-                        outfile.write("Found match for:  " + template + " " +  ip_address + "\n" + "*" * 20 + "\n")
-
-                        outfile.write(res.group() + "\n")
-                    if not res:
-                        outfile.write("Config not found for   " + template + " " + ip_address + "\n" + "*" *20 + "\n")
-                        outfile.write(i + "\n")
-
-
-    connection_handler(ios_address_list, "cisco_ios")
-
-    #connection_handler(junos_address_list, "juniper_junos")
-    #connection_handler(asa_address_list, "cisco_asa")
-
-    #connection_handler( vendor_address_list, "autodetect")
+#connection_handler( vendor_address_list, "autodetect")
 
 
 
