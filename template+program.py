@@ -4,6 +4,7 @@ import netmiko
 from netmiko.ssh_autodetect import SSHDetect
 from netmiko.ssh_dispatcher import ConnectHandler
 import time
+import threading
 from netmiko.ssh_autodetect import SSHDetect
 
 
@@ -12,41 +13,59 @@ from netmiko.ssh_autodetect import SSHDetect
 # asa_command = "show running-config"
 
 outfile = open("outfile.txt", "a+")
-
+print(time.time())
 with open("device_template.txt", "r") as dev_template:
     dev_template = dev_template.read()
 
 dev_list = dev_template.split("$$$")
 print(dev_list)
 def connection_handler(address_list = [], configuration_block=[], dev_type="autodetect"):
-    print(time.time())
-    for i in address_list:
-        var = i.split(",")
-        ip_address, username, password, secret = str(var[0]).strip(), \
-            str(var[1]).strip(), str(var[2]).strip(), str(var[3]).strip()
-        connection = ConnectHandler(host=str(ip_address), username=username, password=password,
-                                                                   secret=secret, device_type=dev_type)
-        connection.enable()
-        time.sleep(1)
 
-        print("*" * 8)
-        result = connection.send_command("show run")
-        result = result.replace("\n ", "\n")
-        #print(repr(result))
-        for i in configuration_block:
-            i = i.rstrip("\n")
-            print(repr(i))
-            print(ip_address)
-            res = re.search(i, result, re.DOTALL)
-            if res: print("found match")
-            #if res: print(res.group() + "\n")
-            if res:
-                outfile.write("Found match for:  " + template + " " + ip_address + "\n" + "*" * 20 + "\n")
-                outfile.write(res.group() + "\n")
-            if not res:
-                outfile.write("Config not found for   " + template + " " + ip_address + "\n" + "*" * 20 + "\n")
-                outfile.write(i + "\n")
-    print(time.time())
+    listx = []
+
+    def threaded(address_variable):
+
+            var = address_variable.split(",")
+            ip_address, username, password, secret = str(var[0]).strip(), \
+                str(var[1]).strip(), str(var[2]).strip(), str(var[3]).strip()
+            connection = ConnectHandler(host=str(ip_address), username=username, password=password,
+                                                                 secret=secret, device_type=dev_type)
+            connection.enable()
+            print("*" * 8)
+            result = connection.send_command("show run")
+            result = result.replace("\n ", "\n")
+            #print(repr(result))
+            for i in configuration_block:
+                i = i.rstrip("\n")
+                #print(repr(i))
+                print(ip_address)
+                res = re.search(i, result, re.DOTALL)
+                if res: print("found match")
+                #if res: print(res.group() + "\n")
+                if res:
+                    outfile.write(res.group() + "\n")
+                if not res:
+                    outfile.write("Config not found for   " + template + " " + ip_address + "\n" + "*" * 20 + "\n")
+                    outfile.write(i + "\n")
+
+    for i in address_list:
+        print(i)
+        print("********")
+
+        tx = threading.Thread(target=threaded, args=(i,))
+        tx.start()
+        print(tx.is_alive())
+        listx.append(tx)
+    for i in listx:
+        i.join()
+
+        #tx.start()
+        # tx.join()
+        # for i in listx:
+        #     i.join()
+        #     print(i.is_alive())
+
+#outfile.close()
 
 for i in dev_list:
 
@@ -79,9 +98,12 @@ for i in dev_list:
     updated_address=  updated_address.split("],")
     updated_address = [sub.replace("[[","").replace("]", "").replace("[", "") for sub in updated_address]
     #we now have a formatted list
+
     if template == "ios_template":
         ios_address_list, ios_template, ios_config  = updated_address, template, configuration_blocks
         connection_handler(ios_address_list, ios_config, "cisco_ios")
+
+
     else:
         pass
     # if template == "junos_template": junos_address_list, junos_template, junos_config = updated_address, template, configuration_blocks
@@ -90,10 +112,11 @@ for i in dev_list:
         connection_handler(asa_address_list, asa_config, "cisco_asa")
     else:
         pass
-outfile.close()
 
 #connection_handler( vendor_address_list, "autodetect")
 
+
+print(time.time())
 
 
 
