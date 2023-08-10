@@ -60,12 +60,6 @@ def connection_handler(address_list = [], configuration_block=[], dev_type="auto
     for i in listx:
         i.join()
 
-        #tx.start()
-        # tx.join()
-        # for i in listx:
-        #     i.join()
-        #     print(i.is_alive())
-
 #outfile.close()
 
 for i in dev_list:
@@ -118,24 +112,3 @@ for i in dev_list:
 
 
 print(time.time())
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #address_list = re.search(".*", address_list.string, re.DOTALL )
-
-
-
-
-
-
-
