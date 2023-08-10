@@ -9,8 +9,5 @@ refer to "config_documentation.txt"   for instructions
 and the template+config.py file
 
 
-https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/a4f2cc5d-c039-4179-8ca0-30c80fe22c57
-
-
 
 
