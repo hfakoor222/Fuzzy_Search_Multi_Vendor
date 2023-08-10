@@ -1,6 +1,5 @@
 
 
-
 #######################################################################################################
 Welcome to configuration template parser program. This program parses multivendor devices.
 Currently ASA, Cisco IOS, IOS-XE,  and Juniper router devices are supported.
@@ -18,34 +17,45 @@ ios_template
 junos_template
 
 
-after which we add a list of lists (enclosed in exterior brackets) for ip addresses and connection information
+after which we add a list of lists (enclosed in exterior double brackets) for ip addresses and connection information.
+connection information needs to include username, password, and an enable/ssh/secret password.
+See below example.
 
 ip_address = [[ip_address1 , username1 , password1, SSH_password1 ], [ip_address2, username2, password2, ""]] 
 
 notice the double brackets at the beginning and end.  The SSH password can be an empty string if desired, depending on device platform.
-junos does not require a secret for running this script, we leave blank by using "" 
+junos does not require a secret for running this script, we leave blank by using "" or can use root user pass
 
 example:
-ip_address = [[10.0.0.1, cisco, cisco123, secret], [10.0.0.2, cisco, cisco123, secret],
+ip_address = [[10.0.0.1, cisco, cisco123, secret], [10.0.0.2, cisco, cisco123, enable_pass],
 		[10.0.0.3, user_x, password_x, secret]
 		[10.0.0.4, user_x, password_x, secret]]
 
 
 after this we can define our templates. 
 
-Templates are parsed using $, and (())
-$ signifies any characters, spaces, and a optional newline,
-whereas (()) signifies any characters without spaces,  
+Templates are parsed using   '#'  '+'    and   '(())'   escape characters.
++ signifies any characters (ascii), spaces, and a optional newline. It runs for 1 line.
+* means any character and can include one line to infinite lines. Be careful with this, if you
+put it at the end of your template it will ready the entire device configuration as one big blovk and try to find a match.
+
+(()) signifies any characters without spaces
+
 in regular-expression terms:
-$     =  .*?
++   =  .*[\n]?
+#   =  .*[\n]*
 (())  =  \S+
 (()) signifies at least 1 character must exist.
+
+example:
+can use 'router ospf (())'
+to match  router ospf 1,  or   router ospf 2   etc
  
 so for example:
 
-router ospf ((5))
-router-id $
-network $ area 0
+router ospf (())
+router-id *
+network (()) (()) area 0
 
 means that this configuration below
 
@@ -54,14 +64,24 @@ router-id 5.5.5.5
 domain-tag 55
 network 192.168.0.0 0.0.0.255 area 0
 
-will be found due optional match (())
-and  $ =  any character (in this case 5.5.5.5)
+our # matches:
+router-id 5.5.5.5
+domain-tag 55
+
+our first (()) matches 192.168.0.0   as there are no spaces
+our 2nd (())  matches 0.0.0.255
+
+
+example  number   two:
 
 we can also do this:
 
-router ospf $
-$
+router ospf (())
+*
 network 192.168.0.0
+
+and it will match as the searches find similar string patterns in the device configuration
+
 
 
 
@@ -74,96 +94,124 @@ router eigrp 65001
  network 10.0.0.0
  network 192.168.14.0
 !
-router ospf 1
- router-id 6.6.6.6
- domain-tag 55
- passive-interface Ethernet0/3
- network 10.0.1.0 0.0.0.127 area 1
- network 10.0.1.128 0.0.0.127 area 1
- network 155.55.55.0 0.0.0.127 area 0
- default-information originate
-
+router bgp 65001
+ bgp log-neighbor-changes
+ network 10.1.1.0 mask 255.255.255.0
+ neighbor 10.1.103.3 remote-as 65001
+ neighbor 10.2.2.2 remote-as 65001
+ neighbor 10.2.2.2 update-source Loopback1
+ neighbor 192.168.14.5 remote-as 65002
 !
 
 
 so we will be matching on the below for example:
 
-router ospf 1
- router-id 6.6.6.6
- domain-tag 55
- passive-interface Ethernet0/3
- network 10.0.1.0 0.0.0.127 area 1
- network 10.0.1.128 0.0.0.127 area 1
- network 155.55.55.0 0.0.0.127 area 0
- default-information originate
 
+interface Serial1/3
+ no ip address
+
+and also on
+
+router bgp 65001
+ bgp log-neighbor-changes
+ network 10.1.1.0 mask 255.255.255.0
+ neighbor 10.1.103.3 remote-as 65001
+ neighbor 10.2.2.2 remote-as 65001
+ neighbor 10.2.2.2 update-source Loopback1
+ neighbor 192.168.14.5 remote-as 65002
+
+
+ur program searches for patterns.
+So for example if the only pattern we search for is a  #   escape character,  it matches the entire running-config.
 
 We can include both fuzzy and exact templates under the same configuration template for deeper searches.
 
-Lets do the search: 
+example:
 
 ios_template
-ip_address = [[10.0.1.1, cisco, cisco123, cisco123], [10.0.1.2, cisco, cisco123, cisco123], 
-[10.0.1.130, cisco, cisco123, cisco123], [10.0.3.4, cisco, cisco123, cisco123]]
+ip_address = [[10.0.0.1, cisco, cisco123, secret], [10.0.0.2, cisco, cisco123, secret1],
+		[10.0.0.3, user_x, password_x, secret2]
+		[10.0.0.4, user_x, password_x, secret3]]
+router bgp 65001
+neighbor 10.1.+
+neighbor 10.1.103.3 remote-as 65002
+$$
+router bgp +
+neighbor 10.1.1.0
+neighbor $ remote-as 65002
+$$
+router bgp +
+neighbor +
+neighbor + remote-as +
+
+
+will return the above bgp result. However the first will return an exact match of 'router bgp 65001',
+the second will return router bgp (any Autonomous System), with a neighbor 10.1.1.0 included in the config,
+and the third will return any router bgp (AS)  with any neighbor any ip address and any remote-as.
+
+
+
+
+
+
+here is a full example:
+
+
+ios_template
+ip_address = [[10.0.0.1, cisco, cisco123, secret], [10.0.0.2, cisco, cisco123, secret],
+		[10.0.0.3, user_x, password_x, secret]
+		[10.0.0.4, user_x, password_x, secret]]
+router bgp 65001
+neighbor 10.1.+
+neighbor 10.1.103.3 remote-as 65002
+$$
+router bgp $
+neighbor 10.1.(()).(())
+neighbor + remote-as 65002
 $$
 router ospf (())
 router-id (())
-network 10.0.(()).(()) area (())
-$$
-router ospf $
-router-id (())
+network 10.1.(()).(()) area (())
+$$$
+junos_template
+ip_address = [[10.5.5.5, junos, junos123, ""], [10.6.6.6, junos_user2, junos1234, ""],
+			[10.7.7.7, junos_user2, junos12345,""]]
+
+
+
+
+
+
+please note although these are fuzzy searches and will do "loose" searches,
+the order of the configuration lines you input matters
+
+i.e:
+router ospf 3
 network $
-$
-network 10.0.(()).(()) area (())
-network $
+router-id 1.1.1.1
+
+will not match the cisco device configs,  as router-id comes before network statement in the running-config
+
+but
+router ospf 3
+router-id 1.1.1.1
+network +
 
 
-The first configuration will not match, this is because there is the "domain-tag" word between "router-id" and "network" statements
+matches the device configuration as it is in the same running order found on the device
 
-However the second template matches:
+in this above case we can use + as "any characters in this line" for more granular control
 
-router ospf $
-router-id (())
-network $
-$
-network 10.0.(()).(()) area (())
-network $
+for example:
 
-Notice we used the $ sign. This could signify 0 or 1 line of any characters. So it matched. This gives us a lot of control to do fuzzy searches, to see if something is off in our configuration.
-
-
-
-Here's one more example -   remember the  double  $$ is used to split the templates, a single $ is used as a control character that signals any amount of characters including spaces, newline, tabs, numbers, etc, and it is non-greedy, meaning it runs for 1 line:
+router ospf 3
++
+router-id 1.1.1.1
++
+network +
+#
 
 
-ios_template
-ip_address = [[10.0.1.1, cisco, cisco123, cisco123], [10.0.1.2, cisco, cisco123, cisco123], 
-[10.0.1.130, cisco, cisco123, cisco123]]
-$$
-router bgp 65001
-$
-$
-$
-neighbor 10.1.$ remote-as $
-neighbor $ remote-as $
-$
-$$
-router bgp $
-$
-
-
-so this is out first template:
-
-router bgp 65001
-$
-$
-$
-neighbor 10.1.$ remote-as $
-neighbor $ remote-as $
-$
-
-this matches any bgp configuration in AS  65001, with various configurations mixed in between the 'router bgp' and 'neighbor remote-as' statements.
-This configuration show that at least 2 neighbors have to be present and one of them must begin with 10.1.   address.
-
-
+will pretty much give you all ospf configurations on the device that have a PID of  3,  and a router-id  of 1.1.1.1
+and at least 1network statement.
 
