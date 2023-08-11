@@ -13,7 +13,11 @@ and the template+config.py file
 
 
 
-https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/b6515b10-e33f-443c-87c4-2697dab7101b
+
+
+
+
+https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/c014c8fd-9427-471a-92b3-ec6a27dc8c4a
 
 
 
