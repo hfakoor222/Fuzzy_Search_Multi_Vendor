@@ -25,6 +25,12 @@ has been tested on Cisco routers, switches, and ASAv. I will be uploading code f
 
 
 refer to "config_documentation.txt"   for instructions
-and the template+config.py file
+
+and the template+config.py file  for the code
+
+
+
+
+https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/eb6a3c02-afa5-4220-8a53-2149e9f45c0e
 
 
