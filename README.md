@@ -1,1 +1,26 @@
+Program searches routers and switches for fuzzy matches.
+User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates, the program does fuzzy searching. 
 
+
+•	+ is equal to search anything non-greedy,  and includes spaces
+
+
+
+•	(())  is equal to any characters no spaces. This gives the user absolute control in template definition.
+
+•	#   The hashtag sign means any character, and 1 line, or more than 1 line. It can read the whole file.
+
+Example:
+router bgp **+**
+neighbor 10.1.**(())**
+neighbor **(())** remote-as 65002
+
+This configuration finds any bgp protocols on the device, that include a neighbor in the subnet **10.1.x.x**  and that
+also have a neighboring AS of 65002
+
+
+has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
+
+
+refer to "config_documentation.txt"   for instructions
+and the template+config.py file
