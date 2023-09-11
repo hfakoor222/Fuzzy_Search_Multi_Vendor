@@ -43,8 +43,8 @@ https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/2b42e85
 https://media.giphy.com/media/20JY76TfKAhR20SfJu/giphy.gif
 
 
-<div id="header" align="center">
+
   <img src="https://media.giphy.com/media/M9gbBd9nbDrOTu1Mqx/giphy.gif" width="100"/>
-</div>
+
 
 
