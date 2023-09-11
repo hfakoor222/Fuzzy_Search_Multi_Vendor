@@ -32,7 +32,9 @@ and the template+config.py file  for the code
 
 
 
-https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/34bcc7ce-57b8-49a9-a692-d2093cc6d7c2
+https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/d844e983-c6fb-4c44-9edf-fd5e884f438a
+
+
 
 
 
