@@ -3,6 +3,8 @@ User inputs  +   and   (())   control characters in a notepad file, along with b
 
 
 •	+ is equal to search anything non-greedy,  and includes spaces
+
+
 •	(())  is equal to any characters no spaces. This gives the user absolute control in template definition.
 
 
