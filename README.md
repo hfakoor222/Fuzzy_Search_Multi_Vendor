@@ -11,9 +11,11 @@ User inputs  +   and   (())   control characters in a notepad file, along with b
 •	#   The hashtag sign means any character, and 1 line, or more than 1 line. It can read the whole file.
 
 Example:
-router bgp **+**
-neighbor 10.1.**(())**
-neighbor **(())** remote-as 65002
+
+ router bgp **_+_**                                
+ neighbor 10.1._**(())**_                                                                                                                                  
+ neighbor _**(())**_ remote-as 65002
+
 
 This configuration finds any bgp protocols on the device, that include a neighbor in the subnet **10.1.x.x**  and that
 also have a neighboring AS of 65002
