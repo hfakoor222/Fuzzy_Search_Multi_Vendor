@@ -187,10 +187,10 @@ the order of the configuration lines you input matters
 
 i.e:
 router ospf 3
-network $
+network (())
 router-id 1.1.1.1
 
-will not match the cisco device configs,  as router-id comes before network statement in the running-config
+this above will not match the cisco device configs,  as router-id comes before network statement in the running-config of cisco devices
 
 but
 router ospf 3
@@ -213,5 +213,5 @@ network +
 
 
 will pretty much give you all ospf configurations on the device that have a PID of  3,  and a router-id  of 1.1.1.1
-and at least 1network statement.
+and at least 1 network statement.
 
