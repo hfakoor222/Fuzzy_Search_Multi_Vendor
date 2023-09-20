@@ -23,7 +23,9 @@ also have a neighboring AS of 65002
 Example 2:
 
  router bgp **(())**
+ 
  +
+ 
  network 2001:db8:**(())**
 
 finds all IPv6 globallly enabled bgp devices.
