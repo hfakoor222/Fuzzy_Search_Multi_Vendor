@@ -21,9 +21,10 @@ This configuration finds any bgp protocols on the device, that include a neighbo
 also have a neighboring AS of 65002
 
 Example 2:
-router bgp (())
+
+router bgp **(())**
 +
-network 2001:db8:**(())**
+network 2001:db8:****(())****
 
 finds all IPv6 globallly enabled bgp devices.
 
