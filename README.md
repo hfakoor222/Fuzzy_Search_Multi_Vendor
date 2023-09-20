@@ -20,6 +20,12 @@ Example:
 This configuration finds any bgp protocols on the device, that include a neighbor in the subnet **10.1.x.x**  and that
 also have a neighboring AS of 65002
 
+Example 2:
+router bgp (())
++
+network 2001:db8:**(())**
+
+finds all IPv6 globallly enabled bgp devices
 
 has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
 
