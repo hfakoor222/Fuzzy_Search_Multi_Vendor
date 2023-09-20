@@ -25,7 +25,7 @@ router bgp (())
 +
 network 2001:db8:**(())**
 
-finds all IPv6 globallly enabled bgp devices
+finds all IPv6 globallly enabled bgp devices.
 
 has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
 
