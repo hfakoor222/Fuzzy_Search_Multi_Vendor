@@ -1,4 +1,4 @@
-Program searches routers and switches for fuzzy matches.
+Program searches routers and switches for fuzzy matches: cisco, junos routers/switches and ASA firewalls.
 User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates, the program does fuzzy searching. 
 
 
