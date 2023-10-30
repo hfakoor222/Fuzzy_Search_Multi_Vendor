@@ -1,5 +1,5 @@
 Program searches routers and switches for fuzzy matches: cisco, junos routers/switches and ASA firewalls.
-User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates, the program does fuzzy searching. 
+User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates, the program does fuzzy searching. We can feed multiple search patterns to hundreds of devices and a result of matches, misconfigurations is printed to a text file.
 
 
 •	+ is equal to search anything non-greedy,  and includes spaces
