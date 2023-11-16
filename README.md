@@ -1,5 +1,5 @@
 Program searches routers and switches for fuzzy matches: cisco, junos routers/switches and ASA firewalls.
-User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates, the program does fuzzy searching. We can feed multiple search patterns to hundreds of devices and a result of matches, misconfigurations is printed to a text file.
+User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates, the program does fuzzy searching. We can feed multiple search patterns to hundreds of devices, search patterns and devices (ip's) can be categorized,  and a result of matches, categorized misconfigurations are printed to a text file: all of this is fed in one form feed .txt file.
 
 
 •	+ is equal to search anything non-greedy,  and includes spaces
@@ -26,14 +26,14 @@ Example 2:
  	+
  	network 2001:db8:(())
 
-finds all IPv6 globallly enabled bgp devices.
+finds all IPv6 globally enabled bgp devices.
 
 has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
 
 
 refer to "config_documentation.txt"   for instructions
 
-and the template+config.py file  for the code
+and the template+config.py file  for the code (I should probably rename this at some point).
 
 
 
