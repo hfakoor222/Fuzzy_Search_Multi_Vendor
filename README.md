@@ -8,8 +8,7 @@ User inputs  +   and   (())   control characters in a notepad file, along with b
 
 •	(())  is equal to any characters no spaces. This gives the user absolute control in template definition.
 
-•	#   The hashtag sign means any character, and 1 line, or more than 1 line. It can read the whole file.
-
+•	#   The hashtag sign means any character, and 1 line, or more than 1 line. It can read the whole device configuration.
 Example:
 
   router bgp **_+_**                                
