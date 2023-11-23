@@ -1,5 +1,5 @@
 Program searches routers and switches for fuzzy matches: cisco, junos routers/switches and ASA firewalls.
-User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates, the program does fuzzy searching. We can feed multiple search patterns to hundreds of devices, search patterns and ip addresses can be categorized,  and a result of matches, categorized misconfigurations are printed to a text file: all of this is fed in one form feed .txt file.
+User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates. We can feed multiple search patterns to hundreds of devices, search patterns and ip addresses can be categorized,  and a result of matches, categorized misconfigurations are printed to a text file: all of this is fed in one form feed .txt file.
 
 
 •	+ is equal to search anything non-greedy,  and includes spaces
@@ -31,6 +31,8 @@ has been tested on Cisco routers, switches, and ASAv. I will be uploading code f
 
 
 refer to "config_documentation.txt"   for instructions
+
+The advantage to this script is that it is threaded, is mutlivendor, supporting up to 90% of existing vendors with Netmiko, and that it runs faster than SolarWinds (threaded); we put in a few search strings and we can misconfigurations in seconds (see video).
 
 and the template+config.py file  for the code (I should probably rename this at some point).
 
