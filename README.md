@@ -1,5 +1,5 @@
 Program searches routers and switches for fuzzy matches: cisco, junos routers/switches and ASA firewalls.
-User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates. We can feed multiple search patterns to hundreds of devices, search patterns and ip addresses can be categorized; misconfigurations are printed to a text file: all of this is fed in one form feed .txt file.
+User inputs  +   and   (())   control characters in a notepad file, along with bare bones configuration templates. We can feed multiple search patterns to hundreds of devices, search patterns and ip addresses can be categorized; all of this is fed in one form feed .txt file.
 
 
 •	+ is equal to search anything non-greedy,  and includes spaces
@@ -25,7 +25,7 @@ Example 2:
  	+
  	network 2001:db8:(())
 
-finds all IPv6 globally enabled bgp devices.
+finds all IPv6 globally enabled bgp devices. If for example we find out our IPv6 routing is slow, we can find out where bgp isn't configured for IPv6.
 
 has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
 
