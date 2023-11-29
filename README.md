@@ -30,11 +30,9 @@ finds all IPv6 globally enabled bgp devices. If for example we find out our IPv6
 has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
 
 
-refer to "config_documentation.txt"   for instructions
+The advantage to this script is mutlivendor, supporting up to 90% of existing vendors with the underlying library, and that it runs quicker than standard network monitoring tools (it is threaded), and gives us customized code control.
 
-The advantage to this script is that it is threaded, is mutlivendor, supporting up to 90% of existing vendors with Netmiko, and that it runs faster than SolarWinds (threaded); we put in a few search strings and we can find misconfigurations in seconds (see video).
-
-and the template+config.py file  for the code (I should probably rename this at some point).
+Refer to "config_documentation.txt"   for instructions and the template+config.py file  for the code.
 
 
 
