@@ -59,6 +59,7 @@ https://github.com/hfakoor222/Fuzzy_Search_Multi_Vendor/assets/105625129/2b42e85
 
 
 
+I will be uploading a AWS API and parser to this soon
 
 :face_exhaling:
 
