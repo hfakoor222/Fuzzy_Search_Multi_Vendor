@@ -4,7 +4,7 @@ User inputs  +   and   (())   control characters in a notepad file, along with b
 
 •	+ is equal to search anything non-greedy,  and includes spaces
 
-•	(())  is equal to any characters no spaces. This gives the user absolute control in template definition. (i.e. %%^& matches but %%^ & does not match).
+•	(())  is equal to any characters no spaces. This gives the user absolute control in template definition. (i.e. 10.0.1.(()) matches any 10.0.1.x subnet) .
 
 •	#   The hashtag sign means any character, and 1 line, or more than 1 line. It can read the whole device configuration.
 Example:
@@ -23,7 +23,7 @@ ip access-list +
 #
 deny udp + range (())-(()) 
 
-This finds any Cisco device in your network that does or doesn't  have any UDP deny statement involved. If your policy is to deny some port ranges, we can find devices that don't have this policy enabled - the device doesn't need integration with monitoring tools or a device API; the script conencts to device via SSH. This type of near match search feature may not be offered by tools like SolarWinds.
+This finds any Cisco device in your network that does or doesn't  have any UDP deny statement involved. If your policy is to deny some port ranges, we can find devices that do or don't have this policy enabled - the device doesn't need integration with monitoring tools or a device API; the script conencts to device via SSH. This type of near match search feature may not be offered by tools like SolarWinds.
 
 
 Example 2:
@@ -32,7 +32,7 @@ Example 2:
  	+
  	address-family ipv6 +
 
-finds all IPv6 globally enabled bgp devices. If for example we find out our IPv6 routing is slow, we can find out where bgp isn't configured for IPv6.
+finds all IPv6 globally enabled bgp devices. If for example we find out our IPv6 is propgating correctly, we can find out where bgp isn't configured for IPv6.
 
 
 
@@ -41,7 +41,7 @@ finds all IPv6 globally enabled bgp devices. If for example we find out our IPv6
 has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
 
 
-The advantage to this script is mutlivendor, supporting up to 90% of existing vendors with the underlying library Netmiko, and that it runs quicker than standard network monitoring tools (it is threaded), and gives us customized code control - for example we get a printed file of either matches, near matches, or no matches (depends on how we specify the code)
+The advantage to this script is mutlivendor, supporting up to 90% of existing vendors with the underlying library Netmiko, and that it runs quicker than standard network monitoring tools (it is threaded), and gives us customized code control - for example we get a printed file of either matches, near matches, or no matches (depends on how we specify the code).  It is a good way of regularly valdiating configurations.
 
 Refer to "config_documentation.txt"   for instructions and the template+config.py file  for the code.
 
