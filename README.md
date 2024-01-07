@@ -18,10 +18,11 @@ Example 1:
     router bgp +                                
     neighbor 10.1.(())                                                                                                                                  
     neighbor (()) remote-as 65002
+    network 10.0.(()).(())
 
 
 This configuration finds any bgp protocols on the device, that include a neighbor in the subnet **10.1.x.x**  and that
-also have a neighboring AS of 65002. We can validate bgp configurations.
+also have a neighboring AS of 65002. We can validate bgp configurations, if it is advertising the correct network, and if it has neighbors in correct subnet.
 
 Example 2:
 
@@ -40,7 +41,7 @@ Example 3:
 finds all IPv6 globally enabled bgp devices. If for example we find out our IPv6 is propgating correctly, we can find out where bgp isn't configured for IPv6.
 
 
-
+The script is multithreaded - it logs in to multiple devices at once to run validations
 
 
 has been tested on Cisco routers, switches, and ASAv. I will be uploading code for Junos scraping soon, and also a video of the code working against ASA (tested last night).
