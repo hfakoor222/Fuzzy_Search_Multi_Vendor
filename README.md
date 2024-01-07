@@ -20,7 +20,7 @@ also have a neighboring AS of 65002
 Here is a good one for security:
 
 ip access-list +
-#
++
 deny udp + range (())-(()) 
 
 This finds any Cisco device in your network that does or doesn't  have any UDP deny statement involved. If your policy is to deny some port ranges, we can find devices that do or don't have this policy enabled - the device doesn't need integration with monitoring tools or a device API; the script conencts to device via SSH. This type of near match search feature may not be offered by tools like SolarWinds.
