@@ -7,7 +7,7 @@ User inputs  +   and   (())   control characters in a notepad file, along with b
 •	(())  is equal to any characters no spaces. This gives the user absolute control in template definition. (i.e. 10.0.1.(()) matches any 10.0.1.x subnet) .
 
 •	#   The hashtag sign means any character, and 1 line, or more than 1 line. It can read the whole device configuration.
-Example:
+Example 1:
 
   router bgp **_+_**                                
   neighbor 10.1._**(())**_                                                                                                                                  
@@ -17,7 +17,7 @@ Example:
 This configuration finds any bgp protocols on the device, that include a neighbor in the subnet **10.1.x.x**  and that
 also have a neighboring AS of 65002
 
-Here is a good one for security:
+Example 2:
 
 ip access-list +  
 deny udp + range (())-(()) 
@@ -25,7 +25,7 @@ deny udp + range (())-(())
 This finds any Cisco device in your network that does or doesn't  have any UDP deny statement involved. If your policy is to deny some port ranges, we can find devices that do or don't have this policy enabled.
 
 
-Example 2:
+Example 3:
 
  	router bgp (())
  	+
