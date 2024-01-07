@@ -49,7 +49,7 @@ has been tested on Cisco routers, switches, and ASAv. I will be uploading code f
 
 
 
-Refer to "config_documentation.txt"   for instructions and the template+config.py file  for the code.
+Refer to "config_documentation.txt"   for instructions and the template+program.py file  for the code.
 
 
 
