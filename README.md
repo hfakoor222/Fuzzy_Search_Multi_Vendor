@@ -18,7 +18,7 @@ Example 1:
     router bgp +                                
     neighbor 10.1.(())                                                                                                                                  
     neighbor (()) remote-as 65002
-    network 10.0.(()).(())
+    network 10.0.(())
 
 
 This configuration finds any bgp protocols on the device, that include a neighbor in the subnet **10.1.x.x**  and that
