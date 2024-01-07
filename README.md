@@ -26,8 +26,8 @@ also have a neighboring AS of 65002. We can validate bgp configurations, if it i
 
 Example 2:
 
-ip access-list +  
-deny udp + range 1025-(()) 
+    ip access-list +  
+    deny udp + range 1025-(()) 
 
 This finds any Cisco device in your network that does or doesn't  have any UDP deny statement involved. If your policy is to deny port ranged 1025-65534 ranges, we can find devices that do or don't have this policy enabled.
 
