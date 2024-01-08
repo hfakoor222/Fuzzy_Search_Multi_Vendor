@@ -11,7 +11,7 @@ User inputs  +   and   (())   control characters in a notepad file, along with b
 •	#   The hashtag sign means any character, and 1 line, or more than 1 line. It can read the whole device configuration.  
 
 Multiple search patterns can be categorized for certain ip_addresses and fed into the script at once.
-Script can validate a misconfigured subnet by 1 binary digit, musconfigured acl, etc
+Script can validate a misconfigured subnet by 1 binary digit, misconfigured acl, etc
 
 Example 1:
 
@@ -22,7 +22,7 @@ Example 1:
 
 
 This configuration finds any bgp protocols on the device, that include a neighbor in the subnet **10.1.x.x**  and that
-also have a neighboring AS of 65002. We can validate bgp configurations, if it is advertising the correct network, and if it has neighbors in correct subnet.
+also have a neighboring AS of 65002. We can validate bgp configurations, if it is advertising the correct network (in this case 10.0.x.x network), and if it has neighbors in correct subnet.
 
 Example 2:
 
